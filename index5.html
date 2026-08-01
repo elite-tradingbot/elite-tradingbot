@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EliteTradeBot | Official Store</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-deep: #0a051b;
+            --bg-cosmic: #120931;
+            --text-white: #ffffff;
+            --text-muted: #9fa2c4;
+            --accent-pink: #ff2a85;
+            --accent-purple: #8a2be2;
+            --accent-cyan: #00ffcc;
+            --card-glass: rgba(22, 13, 57, 0.6);
+            --card-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-deep);
+            color: var(--text-white);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+            width: 100%;
+        }
+
+        .cosmic-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255, 42, 133, 0.15) 0%, transparent 40%),
+                radial-gradient(circle at 90% 10%, rgba(138, 43, 226, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(0, 255, 204, 0.08) 0%, transparent 45%);
+            z-index: -2;
+        }
+
+        .wave-decorator {
+            position: absolute;
+            width: 200%;
+            height: 600px;
+            background: radial-gradient(ellipse at center, rgba(138, 43, 226, 0.12) 0%, transparent 60%);
+            top: 350px;
+            left: -50%;
+            transform: rotate(-5deg);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* TOP NAVIGATION */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px 20px;
+            width: 100%;
+        }
+        .nav-logo-area { display: flex; align-items: center; gap: 10px; }
+        .nav-logo-img { height: 32px; width: auto; filter: drop-shadow(0 0 8px rgba(0, 255, 204, 0.4)); }
+        .nav-links { display: flex; gap: 32px; list-style: none; align-items: center; }
+        .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; }
+        .nav-links a.active { color: var(--text-white); }
+
+        /* HERO LAYOUT */
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px 80px 20px;
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            align-items: center;
+            gap: 40px;
+            width: 100%;
+        }
+        .hero-text { text-align: left; }
+        .hero-title { font-size: 3.5rem; font-weight: 800; line-height: 1.15; margin-bottom: 24px; letter-spacing: -1.5px; }
+        .gradient-text { background: linear-gradient(135deg, #ff73b1 0%, #00ffcc 50%, #4facfe 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero-subtitle { font-size: 1.15rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 35px; }
+        .hero-buttons { display: flex; gap: 15px; }
+        .btn-primary { background: linear-gradient(135deg, #ff2a85, #ff73b1); color: white; padding: 14px 30px; border-radius: 10px; text-decoration: none; font-weight: 600; text-align: center; }
+        .btn-secondary { background: rgba(255, 255, 255, 0.06); color: white; padding: 14px 30px; border-radius: 10px; text-decoration: none; font-weight: 600; border: 1px solid rgba(255, 255, 255, 0.1); text-align: center; }
+
+        .hero-showcase { display: flex; justify-content: center; align-items: center; width: 100%; }
+        .showcase-pod {
+            background: linear-gradient(145deg, #251254, #0e0624);
+            border: 1px solid rgba(138, 43, 226, 0.4);
+            border-radius: 24px;
+            width: 100%;
+            max-width: 420px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+        }
+        .visa-badge { background: #ffffff; color: #1a1f71; display: inline-block; padding: 3px 12px; font-weight: 800; border-radius: 4px; font-size: 0.75rem; margin-bottom: 15px; }
+        .main-price { font-size: 4.2rem; font-weight: 800; color: #ffffff; margin-bottom: 8px; }
+        
+        .btn-pod-cta {
+            background: linear-gradient(135deg, #00ffcc, #00b3ff);
+            color: #0a051b;
+            padding: 14px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            display: block;
+            margin-top: 25px;
+            box-shadow: 0 5px 20px rgba(0, 255, 204, 0.25);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-pod-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(0, 255, 204, 0.4); }
+
+        /* FEATURE MATRIX */
+        .services-section { max-width: 1200px; margin: 0 auto; padding: 60px 20px 100px 20px; width: 100%; }
+        .section-tag { color: var(--accent-pink); font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; display: block; }
+        .section-title { font-size: 2.2rem; font-weight: 700; margin-bottom: 12px; }
+        .section-subtitle { color: var(--text-muted); font-size: 1rem; margin-bottom: 50px; }
+        .grid-3-col { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; align-items: start; }
+
+        .feature-card {
+            background: linear-gradient(135deg, rgba(31, 18, 79, 0.45) 0%, rgba(15, 8, 41, 0.7) 100%);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+            position: relative;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .clickable-card { cursor: pointer; transition: border-color 0.2s, transform 0.2s; }
+        .clickable-card:hover { border-color: var(--accent-cyan); transform: translateY(-2px); }
+        
+        .icon-box { width: 60px; height: 60px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: 25px; }
+        .ib-1 { background: linear-gradient(135deg, #4d13bd, #7b2cbf); color: #00ffcc; }
+        .ib-2 { background: linear-gradient(135deg, #9d1374, #d90429); color: #ffffff; }
+        .ib-3 { background: linear-gradient(135deg, #136a8a, #267871); color: #ffcc00; }
+
+        .feature-card h3 { font-size: 1.3rem; font-weight: 700; margin-bottom: 12px; text-align: left; }
+        .feature-card p { font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; text-align: left; }
+        .click-hint { display: block; margin-top: 15px; font-size: 0.8rem; font-weight: 700; color: var(--accent-cyan); text-transform: uppercase; text-align: left; }
+
+        /* Expandable Vault Panel */
+        .bots-expansion-panel { display: none; margin-top: 25px; padding-top: 20px; border-top: 1px solid rgba(255, 255, 255, 0.08); }
+        .bot-lock-item { display: flex; justify-content: space-between; align-items: center; background: rgba(10, 5, 27, 0.6); padding: 12px 16px; border-radius: 10px; margin-bottom: 10px; gap: 10px; }
+        .bot-info-title { font-size: 0.9rem; font-weight: 600; text-align: left; }
+        .btn-unlock-bot { background: rgba(0, 255, 204, 0.1); color: var(--accent-cyan); border: 1px solid rgba(0, 255, 204, 0.3); padding: 6px 14px; font-size: 0.8rem; font-weight: 700; border-radius: 6px; cursor: pointer; white-space: nowrap; }
+        .btn-unlock-bot:hover { background: var(--accent-cyan); color: var(--bg-deep); }
+
+        .community-tray { background: rgba(11, 6, 31, 0.8); padding: 40px 20px; text-align: center; border-top: 1px solid rgba(255, 255, 255, 0.04); width: 100%; }
+        .tray-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; width: 100%; }
+        .social-links { display: flex; gap: 15px; }
+        .soc-btn { color: white; text-decoration: none; font-weight: 600; padding: 10px 20px; border-radius: 8px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .footer-text { color: rgba(159, 162, 196, 0.4); font-size: 0.8rem; }
+
+        @media (max-width: 968px) {
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .hero-text { text-align: center; }
+            .hero-buttons { justify-content: center; }
+            .grid-3-col { grid-template-columns: 1fr; }
+            .nav-links { gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cosmic-bg"></div>
+<div class="wave-decorator"></div>
+
+<nav class="navbar">
+    <div class="nav-logo-area">
+        <img src="logo.png.jpeg" alt="EliteTradeBot Logo" class="nav-logo-img">
+    </div>
+    <ul class="nav-links">
+        <li><a href="#" class="active">Home</a></li>
+    </ul>
+</nav>
+
+<section class="hero-container">
+    <div class="hero-text">
+        <h1 class="hero-title">Innovate.<br>Create. <span class="gradient-text">Succeed.</span></h1>
+        <p class="hero-subtitle">Empowering your trading parameters with elite, custom-tailored script automation files and responsive premium logic.</p>
+        <div class="hero-buttons">
+            <a href="https://wa.me/18763047407?text=Hello,%20I%20want%20to%20get%20started%20with%20EliteTradeBot" class="btn-primary" target="_blank">Chat on WhatsApp</a>
+        </div>
+    </div>
+    
+    <div class="hero-showcase">
+        <div class="showcase-pod">
+            <div class="visa-badge">VISA / CARD</div>
+            <div class="main-price">$32.00</div>
+            <p style="color: var(--text-muted); font-size: 1rem; margin-bottom: 10px;">Full XML Bot Package</p>
+            <p style="color: var(--accent-cyan); font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;">+ COMPLETE SETUP GUIDE INCLUDED</p>
+            <a href="https://wa.me/18763047407?text=Hello,%20I%20want%20to%20get%20started%20with%20EliteTradeBot" target="_blank" class="btn-pod-cta">GET STARTED NOW</a>
+        </div>
+    </div>
+</section>
+
+<section class="services-section">
+    <span class="section-tag">Our Features</span>
+    <h2 class="section-title">What We Offer</h2>
+    
+    <div class="grid-3-col">
+        <div class="feature-card clickable-card" onclick="toggleBotsPanel(event)">
+            <div class="icon-box ib-1">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+            </div>
+            <h3>Deriv Bot Vault</h3>
+            <p>Premium, optimized XML script logic configured carefully to handle your automated market strategies.</p>
+            <span class="click-hint">👉 Click to view 7 Secret Bots</span>
+
+            <div class="bots-expansion-panel" id="botsPanel">
+                <div class="bot-lock-item">
+                    <span class="bot-info-title">🤖 Elite Bot 1: Digit Over Parameter</span>
+                    <button class="btn-unlock-bot" onclick="triggerBotUnlock(event, 1)">Download</button>
+                </div>
+                <div class="bot-lock-item">
+                    <span class="bot-info-title">🤖 Elite Bot 2: Digit Under Parameter</span>
+                    <button class="btn-unlock-bot" onclick="triggerBotUnlock(event, 2)">Download</button>
+                </div>
+                <div class="bot-lock-item">
+                    <span class="bot-info-title">🤖 Elite Bot 3: Accumulator System</span>
+                    <button class="btn-unlock-bot" onclick="triggerBotUnlock(event, 3)">Download</button>
+                </div>
+                <div class="bot-lock-item">
+                    <span class="bot-info-title">🤖 Elite Bot 4: Martingale Pro Engine</span>
+                    <button class="btn-unlock-bot" onclick="triggerBotUnlock(event, 4)">Download</button>
+                </div>
+                <div class="bot-lock-item">
+                    <span class="bot-info-title">🤖 Elite Bot 5: Volatility Max Logic</span>
+                    <button class="btn-unlock-bot" onclick="triggerBotUnlock(event, 5)">Download</button>
+                </div>
+                <div class="bot-lock-item">
+                    <span class="bot-info-title">🤖 Elite Bot 6: Barrier Logic Execution</span>
+                    <button class="btn-unlock-bot" onclick="triggerBotUnlock(event, 6)">Download</button>
+                </div>
+                <div class="bot-lock-item">
+                    <span class="bot-info-title">🤖 Elite Bot 7: High-Speed Trader</span>
+                    <button class="btn-unlock-bot" onclick="triggerBotUnlock(event, 7)">Download</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="feature-card">
+            <div class="icon-box ib-2">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path></svg>
+            </div>
+            <h3>Tutorial Video</h3>
+            <p>Clear, step-by-step video instructions mapping out exactly how to load, run, and manage your bot settings safely.</p>
+        </div>
+        
+        <a href="https://partner-tracking.deriv.com/click?a=16463&o=1&c=3&link_id=1" target="_blank" class="feature-card clickable-card">
+            <div class="icon-box ib-3">
+                <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+            </div>
+            <h3>Team Up With Me as a Deriv Partner</h3>
+            <p>Join forces directly with our network structure. Build your account, unlock custom tracking, and earn payouts via Deriv's ecosystem.</p>
+            <span class="click-hint">🔗 Click to Register Instantly</span>
+        </a>
+    </div>
+</section>
+
+<footer class="community-tray">
+    <div class="tray-container">
+        <div class="social-links">
+            <a href="https://t.me/elite_TradingBot" target="_blank" class="soc-btn">Telegram Channel</a>
+            <a href="https://instagram.com/elite_TradingBot" target="_blank" class="soc-btn">Instagram Profile</a>
+        </div>
+        <p class="footer-text">&copy; 2026 EliteTradeBot | Mandeville, Jamaica</p>
+    </div>
+</footer>
+
+<script>
+    // File target references for forced automatic downloads
+    const BOT_DOWNLOAD_LINKS = {
+        1: "elite-bot1-digit-over.xml",
+        2: "elite-bot2-digit-under.xml",
+        3: "elite-bot3-accumulator.xml",
+        4: "elite-bot4-martingale-pro.xml",
+        5: "elite-bot5-volatility-max.xml",
+        6: "elite-bot6-barrier-logic.xml",
+        7: "elite-bot7-speed-trader.xml"
+    };
+
+    function toggleBotsPanel(event) {
+        if (event.target.tagName === 'BUTTON' || event.target.closest('.bots-expansion-panel')) return;
+        
+        var panel = document.getElementById('botsPanel');
+        panel.style.display = (panel.style.display === 'block') ? 'none' : 'block';
+    }
+
+    // Direct download trigger without prompt verification
+    function triggerBotUnlock(event, botId) {
+        event.stopPropagation();
+        
+        const fileUrl = BOT_DOWNLOAD_LINKS[botId];
+        const link = document.createElement('a');
+        link.href = fileUrl;
+        link.setAttribute('download', fileUrl);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    }
+</script>
+
+</body>
+</html>
